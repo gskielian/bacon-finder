@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function loadXMLDoc(url)
+{
+var xmlhttp;
+var txt,x,xx,i;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    x=xmlhttp.responseXML.documentElement.getElementsByTagName("name");
+    for (i=0;i<x.length;i++)
+      {
+      txt=txt + "<br>";
+ document.getElementById('txtCDInfo').innerHTML=txt;
+    }
+  }
+xmlhttp.open("GET",url,true);
+xmlhttp.send();
+}
+
+}
+</script>
+</head>
+<body>
+
+<div id="txtCDInfo">
+<button onclick="loadXMLDoc('https://www.blogger.com/feeds/8976412127743946168/posts/default')">Get CD info</button>
+</div>
+
+</body>
+</html>
+
