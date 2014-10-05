@@ -1,0 +1,3 @@
+myJsonMethod({
+  "value_of_something":"42"
+});
