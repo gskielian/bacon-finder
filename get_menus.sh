@@ -3,8 +3,6 @@
 #have bash terminate if any errors
 #set -e
 
-
-
 #mod the ingredient here
 ingredient=bacon
 
@@ -14,7 +12,10 @@ function search_menu()
   cafe_url="http://menu-mtv-$cafe_short_name.blogspot.com/" 
   cafe_name=$2
   wget -O $cafe_directory/$cafe_short_name.html "http://menu-mtv-$cafe_short_name.blogspot.com/" && number_bacons=`grep -i -c "$ingredient" $cafe_directory/$cafe_short_name.html`
-  echo "{\"cafe_short_name\" : \"$cafe_short_name\",\"cafe_url\" : \"$cafe_url\", \"cafe_name\" : \"$cafe_name\",\"number_bacons\" : \"$number_bacons\"}," >> $bacons/bacons.json
+
+  # get the entire text into a single line
+  big_file=`grep -i "JSON Menu" $cafe_directory/$cafe_short_name.html | sed 's/^.*\(JSON Menu.*\)$/\1/g' | sed "s/[\"':;,[->\/-]/ /g" | sed "s/ \+/ /g"`
+  echo "$cafe_short_name : $big_file">> menus.txt
 }
 
 
@@ -40,9 +41,9 @@ else
   rm -f $bacons/*.json
 fi
 
-cafe_array=("atom" "baadal" "backyard" "beta" "betac" "bigtable" "blaze" "charlies" "crave" "evolution" "go" "jia" "kitchensync" "longlife" "lunchbox" "masa" "maverick" "moma" "nourish" "root" "slice" "steam" "stockmarket" "victoria" "yoshka" "quadhalftime" "quadhangout" "quadportal" "trux")
+cafe_array=("baadal" "backyard" "beta" "betac" "bigtable" "blaze" "charlies" "crave" "evolution" "go" "jia" "kitchensync" "longlife" "lunchbox" "masa" "maverick" "moma" "nourish" "root" "slice" "steam" "stockmarket" "victoria" "yoshka" "quadhalftime" "quadhangout" "quadportal" "trux")
 
-cafe_name=( "Atom Café" "Baadal Café" "Backyard Café" "Beta Café" "beta C Café" "Big Table Café" "Blaze Café" "Charlie's Café" "Crave Café" "Evolution Café" "Go! Café" "Café Jia" "KitchenSync Café" "Long Life Café" "The Lunch Box Café" "Masa Café" "Maverick Café" "Café Moma" "Nourish Café" "root Café" "Slice Café" "Steam Café" "Stock Market Café" "Victoria Deli" "Yoshka's Café" "Halftime" "Hangout" "Portal" "Trux Café" )
+cafe_name=( "Baadal Café" "Backyard Café" "Beta Café" "beta C Café" "Big Table Café" "Blaze Café" "Charlie's Café" "Crave Café" "Evolution Café" "Go! Café" "Café Jia" "KitchenSync Café" "Long Life Café" "The Lunch Box Café" "Masa Café" "Maverick Café" "Café Moma" "Nourish Café" "Root Café" "Slice Café" "Steam Café" "Stock Market Café" "Victoria Deli" "Yoshka's Café" "Halftime" "Hangout" "Portal" "Trux Café" )
 
 
 cafe_length=${#cafe_array[@]}
