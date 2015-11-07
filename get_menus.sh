@@ -12,6 +12,7 @@ function search_menu()
   cafe_url="http://menu-mtv-$cafe_short_name.blogspot.com/" 
   cafe_name=$2
   wget -O $cafe_directory/$cafe_short_name.html "http://menu-mtv-$cafe_short_name.blogspot.com/" && number_bacons=`grep -i -c "$ingredient" $cafe_directory/$cafe_short_name.html`
+  echo "{\"cafe_short_name\" : \"$cafe_short_name\",\"cafe_url\" : \"$cafe_url\", \"cafe_name\" : \"$cafe_name\",\"number_bacons\" : \"$number_bacons\"}," >> $bacons/bacons.json
 
   # get the entire text into a single line
   big_file=`grep -i "JSON Menu" $cafe_directory/$cafe_short_name.html | sed 's/^.*\(JSON Menu.*\)$/\1/g' | sed "s/[\"':;,[->\/-]/ /g" | sed "s/ \+/ /g"`
